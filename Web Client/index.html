@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANI</title>
     <style>
+        /* Keyframe animations */
         @keyframes swing {
             0% { transform: translateX(-50%) rotate(0deg); }
             25% { transform: translateX(-50%) rotate(10deg); }
@@ -12,6 +13,12 @@
             75% { transform: translateX(-50%) rotate(-10deg); }
             100% { transform: translateX(-50%) rotate(0deg); }
         }
+
+        /* Smooth transition for animations */
+        .tooltip {
+            transition: visibility 0s, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
@@ -23,7 +30,9 @@
             align-items: center;
             height: 100vh;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
         }
+
         .container {
             background-color: #fff;
             border-radius: 8px;
@@ -34,18 +43,45 @@
             box-sizing: border-box;
             overflow-y: auto;
             max-height: 100%;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        /* Dark mode styling */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #333;
+                color: #f4f4f4;
+            }
+            .container {
+                background-color: #444;
+                color: #f4f4f4;
+                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            }
+            .info p {
+                background-color: #555;
+                color: #f4f4f4;
+            }
+            .tooltip {
+                background-color: #eee;
+                color: #333;
+            }
+        }
+
         h1 {
             text-align: center;
-            color: #333;
+            color: inherit;
         }
+        
         .info {
             margin-bottom: 20px;
         }
+        
         .info h2 {
             margin: 0 0 10px 0;
-            color: #333;
+            color: inherit;
+            cursor: pointer;
         }
+        
         .info p {
             position: relative;
             display: flex;
@@ -54,8 +90,11 @@
             padding: 10px;
             background-color: #f9f9f9;
             border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+            color: #333; /* Explicitly set text color to black */
         }
-        .info p .tooltip {
+        
+        .tooltip {
             visibility: hidden;
             width: 200px;
             background-color: #555;
@@ -66,17 +105,18 @@
             position: absolute;
             z-index: 1;
             opacity: 0;
-            transition: visibility 0s, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             bottom: 125%;
             left: 50%;
             transform: translateX(-50%);
         }
+        
         .info p:hover .tooltip {
             visibility: visible;
             opacity: 1;
             animation: swing 0.5s ease-in-out;
         }
-        .info p .tooltip::after {
+        
+        .tooltip::after {
             content: '';
             position: absolute;
             border-width: 5px;
@@ -86,10 +126,11 @@
             left: 50%;
             transform: translateX(-50%);
         }
+        
         .info span {
             font-weight: bold;
         }
-
+        
         /* Media query for small screens */
         @media (max-width: 670px) {
             body {
@@ -97,11 +138,13 @@
                 height: auto;
                 padding: 20px;
             }
+            
             .container {
                 width: 100%;
                 padding: 10px;
                 box-shadow: none;
             }
+            
             .info p {
                 flex-direction: column;
                 align-items: flex-start;
@@ -114,119 +157,123 @@
         <h1>DANI</h1>
         <div class="info" id="deviceInfo">
             <h2>Device Information</h2>
-            <p>
-                <strong>Platform:</strong> 
-                <span id="platform"></span>
-                <span class="tooltip">🖥️ The operating system of your device.</span>
-            </p>
-            <p>
-                <strong>User Agent:</strong> 
-                <span id="userAgent"></span>
-                <span class="tooltip">🌐 Information about the browser and operating system.</span>
-            </p>
-            <p>
-                <strong>Screen Resolution:</strong> 
-                <span id="screenResolution"></span>
-                <span class="tooltip">📺 The resolution of your screen.</span>
-            </p>
-            <p>
-                <strong>Language:</strong> 
-                <span id="language"></span>
-                <span class="tooltip">🗣️ The preferred language setting of your browser.</span>
-            </p>
-            <p>
-                <strong>Cookies Enabled:</strong> 
-                <span id="cookiesEnabled"></span>
-                <span class="tooltip">🍪 Whether cookies are enabled in the browser.</span>
-            </p>
-            <p>
-                <strong>JavaScript Enabled:</strong> 
-                <span id="javascriptEnabled"></span>
-                <span class="tooltip">💻 Whether JavaScript is enabled in the browser.</span>
-            </p>
-            <p>
-                <strong>Online Status:</strong> 
-                <span id="onlineStatus"></span>
-                <span class="tooltip">📶 Whether the browser is currently online.</span>
-            </p>
-            <p>
-                <strong>Connection Type:</strong> 
-                <span id="connectionType"></span>
-                <span class="tooltip">🔌 Type of network connection (e.g., Wi-Fi, cellular).</span>
-            </p>
-            <p>
-                <strong>Device Memory:</strong> 
-                <span id="deviceMemory"></span>
-                <span class="tooltip">🧠 Approximate amount of device memory in gigabytes.</span>
-            </p>
-            <p>
-                <strong>Number of CPU Cores:</strong> 
-                <span id="hardwareConcurrency"></span>
-                <span class="tooltip">🖥️ Number of logical processors available to run threads on the user's computer.</span>
-            </p>
-            <p>
-                <strong>Color Depth:</strong> 
-                <span id="colorDepth"></span>
-                <span class="tooltip">🎨 Color depth of the user's display in bits per pixel.</span>
-            </p>
-            <p>
-                <strong>Time Zone:</strong> 
-                <span id="timeZone"></span>
-                <span class="tooltip">🕒 Time zone of the user's device.</span>
-            </p>
-            <p>
-                <strong>Battery Level:</strong> 
-                <span id="batteryLevel"></span>
-                <span class="tooltip">🔋 Current battery level of the device.</span>
-            </p>
-            <p>
-                <strong>Battery Charging:</strong> 
-                <span id="batteryCharging"></span>
-                <span class="tooltip">🔌 Whether the device is currently charging.</span>
-            </p>
-            <p>
-                <strong>Vendor:</strong> 
-                <span id="vendor"></span>
-                <span class="tooltip">🏢 The vendor of the graphics card.</span>
-            </p>
-            <p>
-                <strong>Renderer:</strong> 
-                <span id="renderer"></span>
-                <span class="tooltip">🎥 The renderer of the graphics card.</span>
-            </p>
+            <div class="content">
+                <p>
+                    <strong>Platform:</strong> 
+                    <span id="platform"></span>
+                    <span class="tooltip">🖥️ The operating system of your device.</span>
+                </p>
+                <p>
+                    <strong>User Agent:</strong> 
+                    <span id="userAgent"></span>
+                    <span class="tooltip">🌐 Information about the browser and operating system.</span>
+                </p>
+                <p>
+                    <strong>Screen Resolution:</strong> 
+                    <span id="screenResolution"></span>
+                    <span class="tooltip">📺 The resolution of your screen.</span>
+                </p>
+                <p>
+                    <strong>Language:</strong> 
+                    <span id="language"></span>
+                    <span class="tooltip">🗣️ The preferred language setting of your browser.</span>
+                </p>
+                <p>
+                    <strong>Cookies Enabled:</strong> 
+                    <span id="cookiesEnabled"></span>
+                    <span class="tooltip">🍪 Whether cookies are enabled in the browser.</span>
+                </p>
+                <p>
+                    <strong>JavaScript Enabled:</strong> 
+                    <span id="javascriptEnabled"></span>
+                    <span class="tooltip">💻 Whether JavaScript is enabled in the browser.</span>
+                </p>
+                <p>
+                    <strong>Online Status:</strong> 
+                    <span id="onlineStatus"></span>
+                    <span class="tooltip">📶 Whether the browser is currently online.</span>
+                </p>
+                <p>
+                    <strong>Connection Type:</strong> 
+                    <span id="connectionType"></span>
+                    <span class="tooltip">🔌 Type of network connection (e.g., Wi-Fi, cellular).</span>
+                </p>
+                <p>
+                    <strong>Device Memory:</strong> 
+                    <span id="deviceMemory"></span>
+                    <span class="tooltip">🧠 Approximate amount of device memory in gigabytes.</span>
+                </p>
+                <p>
+                    <strong>Number of CPU Cores:</strong> 
+                    <span id="hardwareConcurrency"></span>
+                    <span class="tooltip">🖥️ Number of logical processors available to run threads on the user's computer.</span>
+                </p>
+                <p>
+                    <strong>Color Depth:</strong> 
+                    <span id="colorDepth"></span>
+                    <span class="tooltip">🎨 Color depth of the user's display in bits per pixel.</span>
+                </p>
+                <p>
+                    <strong>Time Zone:</strong> 
+                    <span id="timeZone"></span>
+                    <span class="tooltip">🕒 Time zone of the user's device.</span>
+                </p>
+                <p>
+                    <strong>Battery Level:</strong> 
+                    <span id="batteryLevel"></span>
+                    <span class="tooltip">🔋 Current battery level of the device.</span>
+                </p>
+                <p>
+                    <strong>Battery Charging:</strong> 
+                    <span id="batteryCharging"></span>
+                    <span class="tooltip">🔌 Whether the device is currently charging.</span>
+                </p>
+                <p>
+                    <strong>Vendor:</strong> 
+                    <span id="vendor"></span>
+                    <span class="tooltip">🏢 The vendor of the graphics card.</span>
+                </p>
+                <p>
+                    <strong>Renderer:</strong> 
+                    <span id="renderer"></span>
+                    <span class="tooltip">🎥 The renderer of the graphics card.</span>
+                </p>
+            </div>
         </div>
         <div class="info" id="networkInfo">
             <h2>Network Information</h2>
-            <p>
-                <strong>IP Address:</strong> 
-                <span id="ipAddress"></span>
-                <span class="tooltip">🌐 Your public IP address.</span>
-            </p>
-            <p>
-                <strong>Network Type:</strong> 
-                <span id="networkType"></span>
-                <span class="tooltip">🔌 The type of network connection (e.g., Wi-Fi).</span>
-            </p>
-            <p>
-                <strong>Effective Connection Type:</strong> 
-                <span id="effectiveType"></span>
-                <span class="tooltip">🌐 The effective connection type (e.g., 4G).</span>
-            </p>
-            <p>
-                <strong>Downlink:</strong> 
-                <span id="downlink"></span> Mbps
-                <span class="tooltip">📶 The estimated effective bandwidth in Mbps.</span>
-            </p>
-            <p>
-                <strong>RTT:</strong> 
-                <span id="rtt"></span> ms
-                <span class="tooltip">⌛ The estimated round-trip time in milliseconds.</span>
-            </p>
-            <p>
-                <strong>Local IP Address:</strong> 
-                <span id="localIpAddress"></span>
-                <span class="tooltip">🌐 Your local network IP address. (Requires WebRTC)</span>
-            </p>
+            <div class="content">
+                <p>
+                    <strong>IP Address:</strong> 
+                    <span id="ipAddress"></span>
+                    <span class="tooltip">🌐 Your public IP address.</span>
+                </p>
+                <p>
+                    <strong>Network Type:</strong> 
+                    <span id="networkType"></span>
+                    <span class="tooltip">🔌 The type of network connection (e.g., Wi-Fi).</span>
+                </p>
+                <p>
+                    <strong>Effective Connection Type:</strong> 
+                    <span id="effectiveType"></span>
+                    <span class="tooltip">🌐 The effective connection type (e.g., 4G).</span>
+                </p>
+                <p>
+                    <strong>Downlink:</strong> 
+                    <span id="downlink"></span> Mbps
+                    <span class="tooltip">📶 The estimated effective bandwidth in Mbps.</span>
+                </p>
+                <p>
+                    <strong>RTT:</strong> 
+                    <span id="rtt"></span> ms
+                    <span class="tooltip">⌛ The estimated round-trip time in milliseconds.</span>
+                </p>
+                <p>
+                    <strong>Local IP Address:</strong> 
+                    <span id="localIpAddress"></span>
+                    <span class="tooltip">🌐 Your local network IP address. (Requires WebRTC)</span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -343,6 +390,18 @@
                     tooltip.style.left = '50%';
                     tooltip.style.right = 'auto';
                     tooltip.style.transform = 'translateX(-50%)';
+                }
+            });
+        });
+
+        // Expand/Collapse sections
+        document.querySelectorAll('.info h2').forEach(function(header) {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                if (content.style.display === 'none' || !content.style.display) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
                 }
             });
         });
