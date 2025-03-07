@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DANI</title>
     <style>
+        @keyframes swing {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            25% { transform: translateX(-50%) rotate(10deg); }
+            50% { transform: translateX(-50%) rotate(0deg); }
+            75% { transform: translateX(-50%) rotate(-10deg); }
+            100% { transform: translateX(-50%) rotate(0deg); }
+        }
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
@@ -15,14 +22,18 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            box-sizing: border-box;
         }
         .container {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            width: 90%;
             max-width: 800px;
             padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100%;
         }
         h1 {
             text-align: center;
@@ -54,29 +65,47 @@
             padding: 5px 0;
             position: absolute;
             z-index: 1;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             bottom: 125%;
             left: 50%;
             transform: translateX(-50%);
-            opacity: 0;
-            transition: visibility 0s, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .info p:hover .tooltip {
             visibility: visible;
             opacity: 1;
-            transform: translateX(-50%) translateY(-10px);
+            animation: swing 0.5s ease-in-out;
         }
         .info p .tooltip::after {
             content: '';
             position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
             border-width: 5px;
             border-style: solid;
             border-color: #555 transparent transparent transparent;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
         }
         .info span {
             font-weight: bold;
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 670px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+            }
+            .container {
+                width: 100%;
+                padding: 10px;
+                box-shadow: none;
+            }
+            .info p {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -88,82 +117,82 @@
             <p>
                 <strong>Platform:</strong> 
                 <span id="platform"></span>
-                <span class="tooltip">The operating system of your device.</span>
+                <span class="tooltip">🖥️ The operating system of your device.</span>
             </p>
             <p>
                 <strong>User Agent:</strong> 
                 <span id="userAgent"></span>
-                <span class="tooltip">Information about the browser and operating system.</span>
+                <span class="tooltip">🌐 Information about the browser and operating system.</span>
             </p>
             <p>
                 <strong>Screen Resolution:</strong> 
                 <span id="screenResolution"></span>
-                <span class="tooltip">The resolution of your screen.</span>
+                <span class="tooltip">📺 The resolution of your screen.</span>
             </p>
             <p>
                 <strong>Language:</strong> 
                 <span id="language"></span>
-                <span class="tooltip">The preferred language setting of your browser.</span>
+                <span class="tooltip">🗣️ The preferred language setting of your browser.</span>
             </p>
             <p>
                 <strong>Cookies Enabled:</strong> 
                 <span id="cookiesEnabled"></span>
-                <span class="tooltip">Whether cookies are enabled in the browser.</span>
+                <span class="tooltip">🍪 Whether cookies are enabled in the browser.</span>
             </p>
             <p>
                 <strong>JavaScript Enabled:</strong> 
                 <span id="javascriptEnabled"></span>
-                <span class="tooltip">Whether JavaScript is enabled in the browser.</span>
+                <span class="tooltip">💻 Whether JavaScript is enabled in the browser.</span>
             </p>
             <p>
                 <strong>Online Status:</strong> 
                 <span id="onlineStatus"></span>
-                <span class="tooltip">Whether the browser is currently online.</span>
+                <span class="tooltip">📶 Whether the browser is currently online.</span>
             </p>
             <p>
                 <strong>Connection Type:</strong> 
                 <span id="connectionType"></span>
-                <span class="tooltip">Type of network connection (e.g., Wi-Fi, cellular).</span>
+                <span class="tooltip">🔌 Type of network connection (e.g., Wi-Fi, cellular).</span>
             </p>
             <p>
                 <strong>Device Memory:</strong> 
                 <span id="deviceMemory"></span>
-                <span class="tooltip">Approximate amount of device memory in gigabytes.</span>
+                <span class="tooltip">🧠 Approximate amount of device memory in gigabytes.</span>
             </p>
             <p>
                 <strong>Number of CPU Cores:</strong> 
                 <span id="hardwareConcurrency"></span>
-                <span class="tooltip">Number of logical processors available to run threads on the user's computer.</span>
+                <span class="tooltip">🖥️ Number of logical processors available to run threads on the user's computer.</span>
             </p>
             <p>
                 <strong>Color Depth:</strong> 
                 <span id="colorDepth"></span>
-                <span class="tooltip">Color depth of the user's display in bits per pixel.</span>
+                <span class="tooltip">🎨 Color depth of the user's display in bits per pixel.</span>
             </p>
             <p>
                 <strong>Time Zone:</strong> 
                 <span id="timeZone"></span>
-                <span class="tooltip">Time zone of the user's device.</span>
+                <span class="tooltip">🕒 Time zone of the user's device.</span>
             </p>
             <p>
                 <strong>Battery Level:</strong> 
                 <span id="batteryLevel"></span>
-                <span class="tooltip">Current battery level of the device.</span>
+                <span class="tooltip">🔋 Current battery level of the device.</span>
             </p>
             <p>
                 <strong>Battery Charging:</strong> 
                 <span id="batteryCharging"></span>
-                <span class="tooltip">Whether the device is currently charging.</span>
+                <span class="tooltip">🔌 Whether the device is currently charging.</span>
             </p>
             <p>
                 <strong>Vendor:</strong> 
                 <span id="vendor"></span>
-                <span class="tooltip">The vendor of the graphics card.</span>
+                <span class="tooltip">🏢 The vendor of the graphics card.</span>
             </p>
             <p>
                 <strong>Renderer:</strong> 
                 <span id="renderer"></span>
-                <span class="tooltip">The renderer of the graphics card.</span>
+                <span class="tooltip">🎥 The renderer of the graphics card.</span>
             </p>
         </div>
         <div class="info" id="networkInfo">
@@ -171,32 +200,32 @@
             <p>
                 <strong>IP Address:</strong> 
                 <span id="ipAddress"></span>
-                <span class="tooltip">Your public IP address.</span>
+                <span class="tooltip">🌐 Your public IP address.</span>
             </p>
             <p>
                 <strong>Network Type:</strong> 
                 <span id="networkType"></span>
-                <span class="tooltip">The type of network connection (e.g., Wi-Fi).</span>
+                <span class="tooltip">🔌 The type of network connection (e.g., Wi-Fi).</span>
             </p>
             <p>
                 <strong>Effective Connection Type:</strong> 
                 <span id="effectiveType"></span>
-                <span class="tooltip">The effective connection type (e.g., 4G).</span>
+                <span class="tooltip">🌐 The effective connection type (e.g., 4G).</span>
             </p>
             <p>
                 <strong>Downlink:</strong> 
                 <span id="downlink"></span> Mbps
-                <span class="tooltip">The estimated effective bandwidth in Mbps.</span>
+                <span class="tooltip">📶 The estimated effective bandwidth in Mbps.</span>
             </p>
             <p>
                 <strong>RTT:</strong> 
                 <span id="rtt"></span> ms
-                <span class="tooltip">The estimated round-trip time in milliseconds.</span>
+                <span class="tooltip">⌛ The estimated round-trip time in milliseconds.</span>
             </p>
             <p>
                 <strong>Local IP Address:</strong> 
                 <span id="localIpAddress"></span>
-                <span class="tooltip">Your local network IP address. (Requires WebRTC)</span>
+                <span class="tooltip">🌐 Your local network IP address. (Requires WebRTC)</span>
             </p>
         </div>
     </div>
@@ -298,6 +327,24 @@
 
         getLocalIP(ip => {
             document.getElementById('localIpAddress').textContent = ip || 'N/A';
+        });
+
+        // Adjust tooltip position to prevent clipping off the screen
+        document.querySelectorAll('.info p').forEach(function(paragraph) {
+            paragraph.addEventListener('mouseover', function() {
+                const tooltip = this.querySelector('.tooltip');
+                const rect = tooltip.getBoundingClientRect();
+                const screenWidth = window.innerWidth;
+                if (rect.right > screenWidth) {
+                    tooltip.style.left = 'auto';
+                    tooltip.style.right = '0';
+                    tooltip.style.transform = 'translateX(0)';
+                } else {
+                    tooltip.style.left = '50%';
+                    tooltip.style.right = 'auto';
+                    tooltip.style.transform = 'translateX(-50%)';
+                }
+            });
         });
     </script>
 </body>
