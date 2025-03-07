@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DANI</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        .info h2 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .info p {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .info p .tooltip {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .info p:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+        .info p .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        .info span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DANI</h1>
+        <div class="info" id="deviceInfo">
+            <h2>Device Information</h2>
+            <p>
+                <strong>Platform:</strong> 
+                <span id="platform"></span>
+                <span class="tooltip">The operating system of your device.</span>
+            </p>
+            <p>
+                <strong>User Agent:</strong> 
+                <span id="userAgent"></span>
+                <span class="tooltip">Information about the browser and operating system.</span>
+            </p>
+            <p>
+                <strong>Screen Resolution:</strong> 
+                <span id="screenResolution"></span>
+                <span class="tooltip">The resolution of your screen.</span>
+            </p>
+            <p>
+                <strong>Language:</strong> 
+                <span id="language"></span>
+                <span class="tooltip">The preferred language setting of your browser.</span>
+            </p>
+            <p>
+                <strong>Cookies Enabled:</strong> 
+                <span id="cookiesEnabled"></span>
+                <span class="tooltip">Whether cookies are enabled in the browser.</span>
+            </p>
+            <p>
+                <strong>JavaScript Enabled:</strong> 
+                <span id="javascriptEnabled"></span>
+                <span class="tooltip">Whether JavaScript is enabled in the browser.</span>
+            </p>
+            <p>
+                <strong>Online Status:</strong> 
+                <span id="onlineStatus"></span>
+                <span class="tooltip">Whether the browser is currently online.</span>
+            </p>
+            <p>
+                <strong>Connection Type:</strong> 
+                <span id="connectionType"></span>
+                <span class="tooltip">Type of network connection (e.g., Wi-Fi, cellular).</span>
+            </p>
+            <p>
+                <strong>Device Memory:</strong> 
+                <span id="deviceMemory"></span>
+                <span class="tooltip">Approximate amount of device memory in gigabytes.</span>
+            </p>
+            <p>
+                <strong>Number of CPU Cores:</strong> 
+                <span id="hardwareConcurrency"></span>
+                <span class="tooltip">Number of logical processors available to run threads on the user's computer.</span>
+            </p>
+            <p>
+                <strong>Color Depth:</strong> 
+                <span id="colorDepth"></span>
+                <span class="tooltip">Color depth of the user's display in bits per pixel.</span>
+            </p>
+            <p>
+                <strong>Time Zone:</strong> 
+                <span id="timeZone"></span>
+                <span class="tooltip">Time zone of the user's device.</span>
+            </p>
+            <p>
+                <strong>Battery Level:</strong> 
+                <span id="batteryLevel"></span>
+                <span class="tooltip">Current battery level of the device.</span>
+            </p>
+            <p>
+                <strong>Battery Charging:</strong> 
+                <span id="batteryCharging"></span>
+                <span class="tooltip">Whether the device is currently charging.</span>
+            </p>
+            <p>
+                <strong>Vendor:</strong> 
+                <span id="vendor"></span>
+                <span class="tooltip">The vendor of the graphics card.</span>
+            </p>
+            <p>
+                <strong>Renderer:</strong> 
+                <span id="renderer"></span>
+                <span class="tooltip">The renderer of the graphics card.</span>
+            </p>
+        </div>
+        <div class="info" id="networkInfo">
+            <h2>Network Information</h2>
+            <p>
+                <strong>IP Address:</strong> 
+                <span id="ipAddress"></span>
+                <span class="tooltip">Your public IP address.</span>
+            </p>
+            <p>
+                <strong>Network Type:</strong> 
+                <span id="networkType"></span>
+                <span class="tooltip">The type of network connection (e.g., Wi-Fi).</span>
+            </p>
+            <p>
+                <strong>Effective Connection Type:</strong> 
+                <span id="effectiveType"></span>
+                <span class="tooltip">The effective connection type (e.g., 4G).</span>
+            </p>
+            <p>
+                <strong>Downlink:</strong> 
+                <span id="downlink"></span> Mbps
+                <span class="tooltip">The estimated effective bandwidth in Mbps.</span>
+            </p>
+            <p>
+                <strong>RTT:</strong> 
+                <span id="rtt"></span> ms
+                <span class="tooltip">The estimated round-trip time in milliseconds.</span>
+            </p>
+            <p>
+                <strong>Local IP Address:</strong> 
+                <span id="localIpAddress"></span>
+                <span class="tooltip">Your local network IP address. (Requires WebRTC)</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Device Information
+        document.getElementById('platform').textContent = navigator.platform;
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('screenResolution').textContent = `${window.screen.width} x ${window.screen.height}`;
+        document.getElementById('language').textContent = navigator.language;
+        document.getElementById('cookiesEnabled').textContent = navigator.cookieEnabled ? 'Yes' : 'No';
+        document.getElementById('javascriptEnabled').textContent = 'Yes'; // This script runs because JavaScript is enabled
+        document.getElementById('onlineStatus').textContent = navigator.onLine ? 'Online' : 'Offline';
+        document.getElementById('connectionType').textContent = navigator.connection ? navigator.connection.type : 'N/A';
+        document.getElementById('deviceMemory').textContent = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'N/A';
+        document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency || 'N/A';
+        document.getElementById('colorDepth').textContent = `${screen.colorDepth} bits`;
+        document.getElementById('timeZone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        // Battery Information
+        if (navigator.getBattery) {
+            navigator.getBattery().then(battery => {
+                document.getElementById('batteryLevel').textContent = `${battery.level * 100}%`;
+                document.getElementById('batteryCharging').textContent = battery.charging ? 'Yes' : 'No';
+            });
+        } else {
+            document.getElementById('batteryLevel').textContent = 'N/A';
+            document.getElementById('batteryCharging').textContent = 'N/A';
+        }
+
+        // WebGL Information (Graphics Card)
+        function getWebGLInfo() {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl) {
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                if (debugInfo) {
+                    document.getElementById('vendor').textContent = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+                    document.getElementById('renderer').textContent = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                } else {
+                    document.getElementById('vendor').textContent = 'N/A';
+                    document.getElementById('renderer').textContent = 'N/A';
+                }
+            } else {
+                document.getElementById('vendor').textContent = 'N/A';
+                document.getElementById('renderer').textContent = 'N/A';
+            }
+        }
+        getWebGLInfo();
+
+        // Network Information
+        if ('connection' in navigator) {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            document.getElementById('networkType').textContent = connection.type || 'N/A';
+            document.getElementById('effectiveType').textContent = connection.effectiveType || 'N/A';
+            document.getElementById('downlink').textContent = connection.downlink || 'N/A';
+            document.getElementById('rtt').textContent = connection.rtt || 'N/A';
+            
+            connection.addEventListener('change', updateNetworkInfo);
+        } else {
+            document.getElementById('networkInfo').textContent = 'Network Information API not supported by this browser.';
+        }
+
+        // Function to update network info
+        function updateNetworkInfo() {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            document.getElementById('networkType').textContent = connection.type || 'N/A';
+            document.getElementById('effectiveType').textContent = connection.effectiveType || 'N/A';
+            document.getElementById('downlink').textContent = connection.downlink || 'N/A';
+            document.getElementById('rtt').textContent = connection.rtt || 'N/A';
+        }
+
+        // Fetch IP Address
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipAddress').textContent = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                document.getElementById('ipAddress').textContent = 'Error fetching IP address';
+            });
+
+        // Fetch Local IP Address using WebRTC
+        function getLocalIP(callback) {
+            const pc = new RTCPeerConnection({iceServers: []});
+            pc.createDataChannel('');
+            pc.createOffer().then(offer => pc.setLocalDescription(offer));
+            pc.onicecandidate = event => {
+                if (event.candidate) {
+                    const ipRegExp = /([0-9]{1,3}(\.[0-9]{1,3}){3})/;
+                    const ipMatch = ipRegExp.exec(event.candidate.candidate);
+                    if (ipMatch) {
+                        callback(ipMatch[1]);
+                    }
+                }
+            };
+        }
+
+        getLocalIP(ip => {
+            document.getElementById('localIpAddress').textContent = ip || 'N/A';
+        });
+    </script>
+</body>
+</html>
